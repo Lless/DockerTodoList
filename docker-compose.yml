@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    volumes:
+    - my_app_volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: my_app_db
+  back:
+    image: java
+    working_dir: /app
+    ports:
+    - 8080:8080
+    command: sh -c "./mvnw spring-boot:run"
+  front:
+    image: frontend
+    ports:
+    - 8088:80
+
+volumes:
+  my_app_volume:
